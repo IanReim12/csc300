@@ -12,6 +12,55 @@ public class LinkedList
 
     }
 
+
+
+    public int getAtIndex(int index)
+    {
+        Node currNode = this.head;
+        for(int i = 0; i < index; i++)
+        {
+            currNode = currNode.getNextNode();
+        }
+        return currNode.getPayload();
+    }
+
+
+    public int removeLast()
+    {
+        if(this.count == 1)
+        {
+            return this.removeFront();
+        }
+        else
+        {
+
+            Node currNode = this.head;
+            for(int i = 0; i < this.count-2; i++)
+            {
+                currNode = currNode.getNextNode();
+            }
+
+
+            currNode.setNextNode(null);
+            Node nodeToReturn = currNode.getNextNode();
+            this.count--;
+            return nodeToReturn.getPayload();
+        }
+    }
+
+
+    public int removeFront()
+    {
+        Node currNode = this.head;
+        this.head = this.head.getNextNode();
+        currNode.setNextNode(null);
+        this.count--;
+        return currNode.getPayload();
+    }
+
+
+
+
     public void addFirst(int value)
     {
         Node n = new Node (value);
@@ -26,19 +75,57 @@ public class LinkedList
         count++;
     }
 
+    public void addAtIndex(int value, int index)
+    {
+        if(index == 0)
+        {
+            this.addFirst(value);
+        }
+        else if(this.count == index)
+        {
+            this.BackAdd(value);
+        }
+        else
+        {
 
+            Node currNode = this.head;
+            for(int i = 0; i < index - 1; i++)
+            {
+                currNode = currNode.getNextNode();
+            }
+            Node n = new Node(value);
+            n.setNextNode(currNode.getNextNode());
+            currNode.setNextNode(n);
+            this.count++;
+        }
+    }
 
+    public int removeIndex(int index)
+    {
+        if(index == 0)
+        {
+            return this.removeFront();
+        }
+        else if(index == this.count-1)
+        {
+            return this.removeLast();
+        }
+        else
+        {
+            Node currNode = this.head;
 
+            for(int i = 0; i < index-1; i++)
+            {
+                currNode = currNode.getNextNode();
+            }
 
-
-
-
-
-
-
-
-
-
+            Node nodeToReturn = currNode.getNextNode();
+            currNode.setNextNode(nodeToReturn.getNextNode());
+            nodeToReturn.setNextNode(null);
+            this.count--;
+            return nodeToReturn.getPayload();
+        }
+    }
 
 
 
